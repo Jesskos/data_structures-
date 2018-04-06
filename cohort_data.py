@@ -136,8 +136,12 @@ def all_students_tuple_list(filename):
 
     student_list = []
 
-    # Code goes here
-
+    with open(filename) as file_to_read:
+        for line in file_to_read:
+            line.strip()
+            split_line = line.split("|")
+            cohort = split_line[-1]
+            if co
     return student_list
 
 
