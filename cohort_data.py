@@ -44,20 +44,21 @@ def sort_by_cohort(filename):
     fall_15 = []
     ghosts = []
 
-    cohort = open(filename)
-    for line in cohort:
-        split_line = line.split('|')
-        name = split_line[0] + " " + split_line[1]
-        if split_line[-1].strip() == "G":
-            ghosts.append(name)
-        elif split_line[-1].strip() == "Winter 2016":
-            winter_16.append(name)
-        elif split_line[-1].strip() == "Spring 2016":
-            spring_16.append(name)
-        elif split_line[-1].strip() == "Summer 2016":
-            summer_16.append(name)
-        elif split_line[-1].strip() == "Fall 2015":
-            fall_15.append(name)
+    with open(filename) as file_to_read:
+        for line in file_to_read:
+            split_line = line.split('|')
+            cohort = split_line[-1].strip()
+            name = split_line[0] + " " + split_line[1]
+            if cohort == "G":
+                ghosts.append(name)
+            elif cohort == "Winter 2016":
+                winter_16.append(name)
+            elif cohort == "Spring 2016":
+                spring_16.append(name)
+            elif cohort == "Summer 2016":
+                summer_16.append(name)
+            elif cohort == "Fall 2015":
+                fall_15.append(name)
 
     all_students.extend([fall_15, winter_16, spring_16, summer_16, ghosts])
 
@@ -87,7 +88,7 @@ def hogwarts_by_house(filename):
     ghosts = []
     instructors = []
 
-    # Code goes here
+    #code here
 
     return all_hogwarts
 
