@@ -138,10 +138,14 @@ def all_students_tuple_list(filename):
 
     with open(filename) as file_to_read:
         for line in file_to_read:
-            line.strip()
             split_line = line.split("|")
-            cohort = split_line[-1]
-            if co
+            cohort = split_line[-1].strip()
+
+            if cohort != "I" and cohort != "G":
+                student_list.append((split_line[0] + " " + split_line[1],
+                                     split_line[2], split_line[3],
+                                     cohort))
+
     return student_list
 
 
@@ -165,7 +169,13 @@ def find_cohort_by_student_name(student_list):
 
     """
 
-    # Code goes here
+    student_info = all_students_tuple_list(student_list)
+
+    user_input = raw_input("Who are you looking for? ")
+
+    for item in student_info:
+        if user_input == item[0]:
+            return item[0] + " was in the " + item[3] + " cohort."
 
     return "Student not found."
 
@@ -186,9 +196,27 @@ def find_name_duplicates(filename):
 
     """
 
-    duplicate_names = set()
+    winter_16 = set()
+    spring_16 = set()
+    summer_16 = set()
+    fall_15 = set()
 
-    # Code goes here
+    with open(filename) as students:
+        for line in students:
+            split_line = line.strip().split("|")
+            last_name = split_line[1]
+            cohort = split_line[-1]
+
+            if cohort == "Winter 2016":
+                winter_16.add(last_name)
+            elif cohort == "Spring 2016":
+                spring_16.add(last_name)
+            elif cohort == "Summer 2016":
+                summer_16.add(last_name)
+            elif cohort == "Fall 2015":
+                fall_15.add(last_name)
+
+    duplicate_names = winter_16 & spring_16 & summer_16 & fall_15
 
     return duplicate_names
 
@@ -219,7 +247,20 @@ def find_house_members_by_student_name(student_list):
 
      """
 
-    # Code goes here
+    student_info = all_students_tuple_list(student_list)
+
+    user_input = raw_input("Choose a student: ")
+
+    for item in student_info:
+        if item[0] == user_input:
+            student_house = item[1]
+            cohort = item[-1]
+            print "{} was in house {} in the {} cohort".format(item[0],
+                                                               item[1], item[2])
+            print "The following students are also in their house:"
+            for item in student_info:
+                if item[1] == student_house and item[-1] == cohort and item[0] != user_input:
+                    print item[0]
 
     return
 
